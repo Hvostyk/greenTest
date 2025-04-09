@@ -1,0 +1,19 @@
+:root {
+    /* Neutral */
+    --cl-black: #000000;
+    --cl-grey900: #383838;
+    --cl-grey800:#787F85;
+    --cl-grey700:#959DA3;
+    --cl-grey600:#ACB3B9;
+    --cl-grey500:#C1C6CB;
+    --cl-grey400:#CDD2D7;
+    --cl-grey300:#DADEE2;
+    --cl-grey200:#EEF0F4;
+    --cl-grey100:#F7F9FB;
+    --cl-white:white;
+
+    /*Functional*/
+    --cl-blue:#0D7AD9;
+    --cl-lightBlue:#A6CEF1;
+    --cl-blueHover:#175098;
+}
