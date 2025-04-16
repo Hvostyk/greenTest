@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Section } from '../../node_modules/@greensight/gds/src/components/emotion/Section';
+import { Button } from '../../node_modules/@greensight/gds/src/components/emotion/Button';
 import style from '../Styles/RequestForm.module.css';
 import Input from "./Input";
 
@@ -94,6 +95,7 @@ export default function RequestForm({ title, subtitle }) {
                     </div>
                 </form>
             </div>
+            <Button size='lg'></Button>
         </Section>
     )
 }
