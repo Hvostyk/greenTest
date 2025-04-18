@@ -1,5 +1,5 @@
-import '../src/Styles/fonts.css';
-import ListOfVacancies from './components/ListOfVacancies';
+import '../../src/Styles/fonts.css';
+import ListOfVacancies from './ListOfVacancies';
 
 function App() {
 

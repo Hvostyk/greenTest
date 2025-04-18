@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
-import style from '../Styles/ListOfVacancies.module.css'
+import style from './components styles/ListOfVacancies.module.css'
 import Filters from './Filters'
 import Vacancies from './Vacancies'
 import RequestForm from './RequestForm'
 import Footer from './Footer'
+
     export default function ListOfVacancies() {
 
-        const savedFilters = JSON.parse(localStorage.getItem('vacancyFilters')) || {
+        let savedFilters = JSON.parse(localStorage.getItem('vacancyFilters')) || {
             Form: '',
             Position: ''
         };
-
-        const savedPagination = parseInt(localStorage.getItem('vacanciesCount')) || 5
+        let savedPagination = parseInt(localStorage.getItem('vacanciesCount')) || 5
     
         const [filters, setFilters] = useState(savedFilters);
         const [paginationCount, setPaginationCount] = useState(savedPagination);
@@ -24,12 +24,12 @@ import Footer from './Footer'
             localStorage.setItem('vacancyFilters', JSON.stringify(filters));
         }, [filters]);
 
-        function handleFilterChange(filters){
+        function handleFilterChange(filters){ //Принимает изменения из дочернего компонента
             setFilters(filters)
             setPaginationCount(5);
         }
 
-        function handleClearFilters(){
+        function handleClearFilters(){//Принимает сброс фильтров
             const newFilters = { Form: '', Position: '' };
             setFilters(newFilters);
             setPaginationCount(5);

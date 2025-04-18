@@ -1,14 +1,14 @@
-import style from "../Styles/CustomSelect.module.css"
+import style from "../components styles/CustomSelect.module.css"
 import { useState,Fragment } from 'react';
 import classNames from 'classnames/bind';
-import { Section } from '../../node_modules/@greensight/gds/src/components/emotion/Section'
+import { Section } from '../../../node_modules/@greensight/gds/src/components/emotion/Section'
 const cx=classNames.bind(style);
 
-export default function CustomSelect({values, type, onChange, value , enable}){  // values=[{value:"String", id:"String"},{},{}]
+export default function CustomSelect({values, type, onChange, value}){  // values=[{value:"String", id:"String"},{},{}]
 
     const [isactive,setActivity]=useState(false); //Состояние для переменной открытия закрытия Select`a
 
-    const selectClass=cx({
+    const selectClass=cx({ //Добавление классов для раскрытия/закрытия элемента
         'select':true,
         'active':isactive,
         'selected':value!=='',

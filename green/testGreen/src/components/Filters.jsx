@@ -1,26 +1,28 @@
 import { Section } from '../../node_modules/@greensight/gds/src/components/emotion/Section'
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import CustomSelect from './customSelect';
-import style from '../Styles/Filters.module.css';
+import CustomSelect from './controls/CustomSelect.jsx';
+import { CrossIcon } from '../Scripts/icons/crossIcon.jsx';
+import style from './components styles/Filters.module.css';
 const cx=classNames.bind(style);
-export default function Filters({onChange, onClear, initialFilters}){
-    const [filters, setFilters] = useState(initialFilters);
-    
 
-    const filterClear=cx({
+export default function Filters({onChange, onClear, initialFilters}){
+    
+    const [filters, setFilters] = useState(initialFilters);
+
+    const filterClear=cx({ //Активация скрытой кнопки "clear filters"
         'filters-clear':true,
         'disabled':filters.Form==='' && filters.Position==='',
     })
 
-    const FilterChange = (type, value) => {
+    const FilterChange = (type, value) => { //callback принимающий значения филтьтров из дочернего компонента
         setFilters(prev => ({
             ...prev,
             [type]: value
         }));
     };
 
-    const handleFiltersChange=()=>{
+    const handleFiltersChange=()=>{ //callback отправляющий значения фильтров в родительский компонент
         onChange(filters)
     }
 
@@ -70,13 +72,7 @@ export default function Filters({onChange, onClear, initialFilters}){
         <div className={filterClear} onClick={remove}>
 
             <div className={style['filters-clear_image']}>
-                
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" 
-                d="M9.0203 1.02018C9.21556 0.824917 9.21556 0.508335 9.0203 0.313073C8.82504 0.11781 8.50846 0.11781 8.31319 0.313073L4.66675 3.95952L1.0203 0.313073C0.825039 0.11781 0.508457 0.11781 0.313195 0.313073C0.117932 0.508335 0.117932 0.824917 0.313195 1.02018L3.95964 4.66663L0.313195 8.31307C0.117932 8.50834 0.117932 8.82492 0.313195 9.02018C0.508457 9.21544 0.825039 9.21544 1.0203 9.02018L4.66675 5.37373L8.31319 9.02018C8.50846 9.21544 8.82504 9.21544 9.0203 9.02018C9.21556 8.82492 9.21556 8.50834 9.0203 8.31307L5.37386 4.66663L9.0203 1.02018Z" 
-                />
-                </svg>
-
+                <CrossIcon/>
             </div>
 
             <div className={style['filters-clear_text']}>Clear filters</div>

@@ -1,33 +1,32 @@
-import { useState } from 'react';
+import { useState,useRef } from 'react';
 import { Section } from '../../node_modules/@greensight/gds/src/components/emotion/Section';
-import { Button } from '../../node_modules/@greensight/gds/src/components/emotion/Button';
-import style from '../Styles/RequestForm.module.css';
-import Input from "./Input";
-
+import { EmailRegexp } from '../Scripts/constants/regexps';
+import { telRegexp } from '../Scripts/constants/regexps';
+import style from './components styles/RequestForm.module.css';
+import Input from "./controls/Input";
 export default function RequestForm({ title, subtitle }) {
-    const EmailRegexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const telRegexp=/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
-    const [formData, setFormData] = useState({
+
+    const [formData, setFormData] = useState({ //состояние для информации из формы
         name: '',
         email: '',
         phone: '',
         comment: ''
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e) => { //Вывод отклика в человекочитаемом виде
         e.preventDefault();
         
         const message = `
-            Имя: ${formData.name || 'Не указано'}
-            Email: ${formData.email || 'Не указан'}
-            Телефон: ${formData.phone || 'Не указан'}
+            Имя: ${formData.name}
+            Email: ${formData.email}
+            Телефон: ${formData.phone}
             Комментарий: ${formData.comment || 'Нет комментария'}
         `.replace(/^\s+/gm, '');
 
         alert(message);
     };
 
-    const handleInputChange = (name, value) => {
+    const handleInputChange = (name, value) => { //Отлавливание изменения состояния input и запись в data
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -88,14 +87,13 @@ export default function RequestForm({ title, subtitle }) {
                         </li>
                     </ul>
 
-                    <button type="submit">Send</button>
+                    <button type="submit" >Send</button>
                     <div className={style['personalData']}>
                         <span>By clicking "Send" you confirm your consent to the</span>
                         <span style={{color:'#0D7AD9', margin:'0'}}>processing of personal data</span>
                     </div>
                 </form>
             </div>
-            <Button size='lg'></Button>
         </Section>
     )
 }

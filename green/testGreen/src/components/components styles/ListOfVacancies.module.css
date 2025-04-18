@@ -1,5 +1,5 @@
-@import '../Styles/variables.css';
-@import '../Styles/fonts.css';
+@import 'src/Styles/variables.css';
+@import 'src/Styles/fonts.css';
 
 .hhru{
     font-family: 'Roboto';

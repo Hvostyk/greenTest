@@ -1,62 +1,50 @@
-import { useState, useEffect } from 'react';
-import style from '../Styles/Vacancies.module.css'
+import { useState, useEffect, useRef } from 'react';
+import style from './components styles/Vacancies.module.css'
 import Vacancy from './Vacancy';
+import {vacanciesData } from '../api/VacanciesData.js'
 
 function vacanciesContainer(vacancies){ //контейнер вакансий
     return (vacancies.map((item)=>(
         <Vacancy vacancy={item}/>
     ))
     )
-    
 }
 
 export default function Vacancies({filters, paginationCount, setPaginationCount }){
+
+      const [vacancies,setVacancies]=useState([])
+      const addMoreBut=useRef(null)
 
       useEffect(() => {
         localStorage.setItem('vacanciesCount', paginationCount.toString());
       }, [paginationCount]);
 
-      const [vacancies,setVacancies]=useState([])
 
-    useEffect(()=>{
+      useEffect(()=>{
+      addMoreBut.current.disabled=true
 
-      const fetchData = async () => {
-        const url = new URL('https://api.hh.ru/vacancies');
-        url.searchParams.set('per_page', 21);
-        
-        if(filters.Form === 'Part time') {
-            url.searchParams.set('employment', 'part');
-        } else {
-            url.searchParams.set('employment', 'full');
+      vacanciesData(filters).then((data)=>{
+        setVacancies(data);
+        if (vacancies != []){
+          addMoreBut.current.disabled=false;
         }
+      })
+      },[filters])
 
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            setVacancies(data.items || []);
-        } catch (error) {
-            console.error('Ошибка:', error);
-            setVacancies([])
+      const newVacancies=()=>{ //отображение новых вакансий на сайте
+        if((paginationCount+5)>vacancies.length){
+          setPaginationCount(vacancies.length)
+          addMoreBut.current.disabled=true
         }
-    };
-    
-    fetchData();
-    },[filters])
-
-    const newVacancies=()=>{ //отображение новых вакансий на сайте
-      if((paginationCount+5)>vacancies.length){
-        setPaginationCount(vacancies.length)
-        setAllVacancies(true)
+        else{
+          setPaginationCount((i)=>i+5)
+        }
       }
-      else{
-        setPaginationCount((i)=>i+5)
-      }
-    }
 
-    return(
-        <div className={style['Vacancies']}>
-          {vacanciesContainer(vacancies.slice(0,paginationCount))}
-          <button className={style['newVacancies']} onClick={newVacancies} disabled={(paginationCount===vacancies.length)? true:false}>Show more</button>
-        </div>
-    )
+      return(
+          <div className={style['Vacancies']}>
+            {vacanciesContainer(vacancies.slice(0,paginationCount))}
+            <button ref={addMoreBut} className={style['newVacancies']} onClick={newVacancies}>Show more</button>
+          </div>
+      )
 }
